@@ -9,7 +9,6 @@ var app = express();
 
 app.use(bodyParser.json());
 
-
 app.post('/todos', (req, res) => {
 
   var todo = new Todo({
@@ -19,14 +18,13 @@ app.post('/todos', (req, res) => {
   todo.save().then((doc)=> {
     res.send(doc);
   }, (e) => {
-    res.send(e);
+    res.status(400).send(e);
   });
-
 })
 
+module.exports = {app};
 
 app.post('/users', (req, res) => {
-
   var user = new User({
      text : req.body.email
   });
@@ -36,43 +34,8 @@ app.post('/users', (req, res) => {
   }, (e) => {
     res.send(e);
   });
-
 })
-
-
 
 app.listen(3000, () => {
   console.log('Started on port 3000')
 });
-
-
-
-
-
-// var newTodo = new Todo({
-//    text : '  Cook dinner    '
-// });
-
-// var newTodo = new Todo({
-//   text : 'Cook breakfast',
-//   completed : false,
-//   completedAt : 123
-// });
-
-// newTodo.save().then((doc)=> {
-//   console.log('Saved todo', doc)
-// }, (e) => {
-//   console.log('Unable to save todo', e)
-// });
-
-// User model
-
-// var newUser = new User({
-//    email : 'davide.monticelli@hotmail.it'
-// });
-//
-// newUser.save().then((doc)=> {
-//   console.log('Saved todo', doc)
-// }, (e) => {
-//   console.log('Unable to save todo', e)
-// });
