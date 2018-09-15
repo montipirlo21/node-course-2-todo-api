@@ -31,7 +31,7 @@ const {User} = require('./../server/models/user')
 // }).catch((e) => console.log(e));
 
 // query usercollection with id
-var userId = '5b997830009755043c7f84ba';
+var userId = 'b997830009755043c7f84ba';
 User.findById(userId).then((user) => {
   if(!user){
     return console.log("user not found");
