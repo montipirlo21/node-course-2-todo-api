@@ -7,12 +7,13 @@ const {Todo} = require('./../models/todo');
 const {ObjectID} = require('mongodb');
 
 const todos = [{
-  _id : new ObjectID(),
-  text : 'First test todo'},
-  {
-    _id : new ObjectID(),
-    text : 'Second test todo'
-  }]
+    _id: new ObjectID(),
+    text: 'First test todo'
+},
+{
+    _id: new ObjectID(),
+    text: 'Second test todo'
+}];
 
 beforeEach((done) => {
   Todo.remove({}).then(() => {
@@ -102,3 +103,41 @@ describe('GET /todos:id', () => {
   });
 
 });
+
+describe('DELETE /todos:id', () => {
+    it('should delete todo doc', (done) => {
+        request(app)
+            .delete('/todos/' + todos[0]._id.toHexString())
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.text).toBe(todos[0].text);
+            })
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+
+                Todo.findById(hexId).then((todo) => {
+                    expect(todo).toNotExist();
+                    done;
+                }).catch((e) => done(e));
+
+            });
+    });
+
+    it('should return 404 if todo not found', (done) => {
+        var hexId = new ObjectID().toHexString();
+        request(app)
+            .delete('/todos/' + hexId)
+            .expect(404)
+            .end(done);
+    });
+
+    it('should return 404 for non-object id', (done) => {
+        request(app)
+            .delete('/todos/123')
+            .expect(404)
+            .end(done);
+    });
+});
+
