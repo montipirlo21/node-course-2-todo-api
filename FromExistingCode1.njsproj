@@ -38,6 +38,7 @@
     <Folder Include="server\models" />
     <Folder Include="server\config\" />
     <Folder Include="server\tests" />
+    <Folder Include="server\tests\seed\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="playground\hashing.js" />
@@ -46,6 +47,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="server\middleware\authenticate.js" />
+    <Compile Include="server\tests\seed\seed.js">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
